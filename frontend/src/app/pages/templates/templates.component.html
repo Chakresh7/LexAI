@@ -1,0 +1,107 @@
+<div class="templates-page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar glass">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <a routerLink="/" class="brand-link">
+          <div class="brand-icon">⚖️</div>
+          <span class="brand-name">LexAI</span>
+        </a>
+        <span class="brand-badge badge badge-blue">Templates</span>
+      </div>
+      <div class="nav-links">
+        <a routerLink="/chat">Chat</a>
+        <a routerLink="/analyze">Analyze</a>
+        <a routerLink="/templates" class="active">Templates</a>
+      </div>
+      <a routerLink="/chat" class="btn-primary nav-cta">
+        Get Legal Help →
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="templates-content">
+    <div class="page-header">
+      <div class="section-label label">Ready to Use</div>
+      <h1 class="page-title">Legal Templates</h1>
+      <p class="page-sub">Generate professional, jurisdiction-ready legal documents in seconds. Fill in the details, and LexAI does the rest.</p>
+    </div>
+
+    <!-- TEMPLATE GRID -->
+    <div class="templates-grid">
+      <div class="template-card card" *ngFor="let t of templates; let i = index"
+           [style.animation-delay]="(i * 0.1) + 's'" (click)="openModal(t)">
+        <div class="template-icon">{{ t.icon }}</div>
+        <h3 class="template-name">{{ t.name }}</h3>
+        <p class="template-desc">{{ t.description }}</p>
+        <div class="template-meta">
+          <span class="badge badge-blue">{{ t.fields.length }} fields</span>
+        </div>
+        <button class="template-cta">Generate →</button>
+      </div>
+    </div>
+
+    <div class="disclaimer-bottom label">⚠️ AI-generated templates are for reference only. Have a lawyer review before signing.</div>
+  </div>
+
+  <!-- MODAL OVERLAY -->
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-panel glass" (click)="$event.stopPropagation()">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">{{ selectedTemplate?.icon }}</span>
+          <div>
+            <h2 class="modal-title">{{ selectedTemplate?.name }}</h2>
+            <p class="modal-subtitle">{{ selectedTemplate?.description }}</p>
+          </div>
+        </div>
+        <button class="close-btn" (click)="closeModal()">✕</button>
+      </div>
+
+      <!-- Form View -->
+      <div class="modal-body" *ngIf="!generatedContent">
+        <div class="form-grid">
+          <div class="form-group" *ngFor="let field of selectedTemplate?.fields">
+            <label class="form-label">{{ formatFieldLabel(field) }}</label>
+            <input
+              class="input-field"
+              [(ngModel)]="formData[field]"
+              [placeholder]="'Enter ' + formatFieldLabel(field).toLowerCase()">
+          </div>
+        </div>
+
+        <button class="btn-primary generate-btn" (click)="generate()" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Generate Document →</span>
+          <span *ngIf="isLoading" class="loading-text">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            Generating...
+          </span>
+        </button>
+      </div>
+
+      <!-- Result View -->
+      <div class="modal-body result-view" *ngIf="generatedContent">
+        <div class="result-header-bar">
+          <span class="badge badge-green">✅ Generated</span>
+          <div class="result-actions">
+            <button class="btn-ghost" (click)="copyToClipboard()">
+              {{ copySuccess ? '✓ Copied!' : '📋 Copy' }}
+            </button>
+            <button class="btn-ghost" (click)="printDocument()">🖨️ Print</button>
+          </div>
+        </div>
+        <textarea class="result-textarea" readonly [value]="generatedContent"></textarea>
+        <button class="btn-secondary back-btn" (click)="generatedContent = ''">← Edit Details</button>
+      </div>
+
+      <div class="modal-footer label">
+        ⚠️ This is an AI-generated template. Review with a qualified lawyer before use.
+      </div>
+    </div>
+  </div>
+
+</div>

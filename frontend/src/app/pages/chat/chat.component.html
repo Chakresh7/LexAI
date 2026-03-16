@@ -1,0 +1,69 @@
+<div class="chat-page">
+  <!-- SIDEBAR -->
+  <aside class="sidebar glass">
+    <div class="sidebar-brand">
+      <a routerLink="/" class="back-link">← Back</a>
+      <div class="brand">⚖️ LexAI</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label label">Quick Questions</div>
+      <div class="suggestions">
+        <button class="suggestion-btn" *ngFor="let s of suggestions" (click)="useSuggestion(s)">
+          {{ s }}
+        </button>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <a routerLink="/analyze" class="nav-item">📄 Document Analyzer</a>
+      <a routerLink="/templates" class="nav-item">📝 Legal Templates</a>
+    </div>
+  </aside>
+
+  <!-- CHAT MAIN -->
+  <main class="chat-main">
+    <div class="chat-header glass">
+      <div class="header-info">
+        <div class="ai-avatar">⚖️</div>
+        <div>
+          <div class="ai-name">LexAI Assistant</div>
+          <div class="ai-status"><span class="status-dot"></span> Ready to help</div>
+        </div>
+      </div>
+      <div class="header-badge badge badge-blue">Powered by LLaMA 3.3</div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="messages-area">
+      <div class="message-wrap" *ngFor="let msg of messages" [class.user-wrap]="msg.role === 'user'">
+        <div class="msg-avatar" *ngIf="msg.role === 'assistant'">⚖️</div>
+        <div class="message" [class.user-msg]="msg.role === 'user'" [class.ai-msg]="msg.role === 'assistant'"
+             [innerHTML]="formatMessage(msg.content)">
+        </div>
+        <div class="msg-avatar user-avatar" *ngIf="msg.role === 'user'">You</div>
+      </div>
+
+      <!-- TYPING INDICATOR -->
+      <div class="message-wrap" *ngIf="isLoading">
+        <div class="msg-avatar">⚖️</div>
+        <div class="message ai-msg typing-msg">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+      <div #messagesEnd></div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="input-area glass">
+      <div class="disclaimer-bar label">⚠️ Legal information only — not a substitute for professional legal advice</div>
+      <div class="input-row">
+        <textarea #inputRef [(ngModel)]="inputText" (keydown)="onKeyDown($event)"
+          placeholder="Ask your legal question... (e.g. Can my employer deduct salary without notice?)"
+          class="chat-input" rows="1"></textarea>
+        <button class="send-btn btn-primary" (click)="sendMessage()" [disabled]="isLoading || !inputText.trim()">
+          <span *ngIf="!isLoading">Send →</span>
+          <span *ngIf="isLoading">...</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

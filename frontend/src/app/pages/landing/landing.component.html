@@ -1,0 +1,143 @@
+<div class="landing">
+
+  <!-- NAVBAR -->
+  <nav class="navbar glass">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="brand-icon">⚖️</div>
+        <span class="brand-name">LexAI</span>
+        <span class="brand-badge badge badge-blue">Beta</span>
+      </div>
+      <div class="nav-links">
+        <a routerLink="/chat">Chat</a>
+        <a routerLink="/analyze">Analyze</a>
+        <a routerLink="/templates">Templates</a>
+      </div>
+      <a routerLink="/chat" class="btn-primary nav-cta">
+        Get Legal Help →
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="mesh-orb orb-1"></div>
+      <div class="mesh-orb orb-2"></div>
+      <div class="mesh-orb orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge badge badge-blue animate-fade-up stagger-1">
+        <span class="dot"></span>
+        AI Legal Assistant for Every Indian
+      </div>
+      <h1 class="hero-headline animate-fade-up stagger-2">
+        Legal Help,<br>
+        <span class="headline-accent">Finally Simple.</span>
+      </h1>
+      <p class="hero-sub animate-fade-up stagger-3">
+        Understand your rights. Analyze contracts. Generate legal documents.<br>
+        Powered by AI. Built for India. Free forever.
+      </p>
+      <div class="hero-actions animate-fade-up stagger-4">
+        <a routerLink="/chat" class="btn-primary btn-lg">
+          Ask a Legal Question →
+        </a>
+        <a routerLink="/analyze" class="btn-secondary btn-lg">
+          Analyze a Document
+        </a>
+      </div>
+      <div class="hero-disclaimer animate-fade-up stagger-5">
+        <span>🔒</span>
+        Legal information only — not a substitute for a licensed lawyer
+      </div>
+    </div>
+
+    <!-- FLOATING HERO CARD -->
+    <div class="hero-card glass animate-fade-up stagger-3">
+      <div class="card-header">
+        <div class="avatar">⚖️</div>
+        <div>
+          <div class="card-name">LexAI</div>
+          <div class="card-status"><span class="status-dot"></span> Online</div>
+        </div>
+      </div>
+      <div class="chat-preview">
+        <div class="msg user-msg">Can my landlord refuse to return my deposit?</div>
+        <div class="msg ai-msg">Under the Transfer of Property Act, your landlord must return the security deposit within 30 days of vacating, minus legitimate deductions. If refused, you can file a complaint...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section reveal">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" *ngFor="let stat of stats">
+          <div class="stat-number">{{ stat.number }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-label label reveal">What LexAI Does</div>
+      <h2 class="section-heading reveal">Three Tools.<br>Every Legal Need.</h2>
+
+      <div class="features-grid">
+        <div class="feature-card card reveal" *ngFor="let f of features; let i = index"
+             [style.animation-delay]="(i * 0.15) + 's'">
+          <div class="feature-icon">{{ f.icon }}</div>
+          <div class="feature-badge badge badge-blue">{{ f.tag }}</div>
+          <h3 class="feature-title">{{ f.title }}</h3>
+          <p class="feature-desc">{{ f.desc }}</p>
+          <a [routerLink]="f.route" class="feature-link">
+            Get Started →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGAL AREAS -->
+  <section class="areas-section reveal">
+    <div class="container">
+      <div class="section-label label">Coverage</div>
+      <h2 class="section-heading">Legal Areas We Cover</h2>
+      <div class="areas-grid">
+        <span class="area-pill" *ngFor="let area of legalAreas">{{ area }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-section reveal">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-orb"></div>
+        <h2 class="cta-heading">Know Your Rights.<br>Starting Now.</h2>
+        <p class="cta-sub">Free. Instant. Built for every Indian citizen.</p>
+        <a routerLink="/chat" class="btn-primary btn-lg">Start for Free →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">
+        <span>⚖️ LexAI</span>
+        <span class="footer-disclaimer">Legal information only. Not legal advice. Consult a qualified lawyer for your specific case.</span>
+      </div>
+      <div class="footer-links">
+        <a routerLink="/chat">Chat</a>
+        <a routerLink="/analyze">Analyze</a>
+        <a routerLink="/templates">Templates</a>
+      </div>
+    </div>
+  </footer>
+
+</div>

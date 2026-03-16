@@ -1,0 +1,43 @@
+.display-xl {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(48px, 6vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.display-lg {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.1;
+}
+
+.heading-xl {
+  font-family: 'Outfit', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.heading-lg {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.body-lg {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.body-md {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}

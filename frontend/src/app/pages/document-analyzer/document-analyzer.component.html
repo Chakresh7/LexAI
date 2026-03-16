@@ -1,0 +1,138 @@
+<div class="analyzer-page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar glass">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <a routerLink="/" class="brand-link">
+          <div class="brand-icon">⚖️</div>
+          <span class="brand-name">LexAI</span>
+        </a>
+        <span class="brand-badge badge badge-blue">Analyzer</span>
+      </div>
+      <div class="nav-links">
+        <a routerLink="/chat">Chat</a>
+        <a routerLink="/analyze" class="active">Analyze</a>
+        <a routerLink="/templates">Templates</a>
+      </div>
+      <a routerLink="/chat" class="btn-primary nav-cta">
+        Get Legal Help →
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="analyzer-content">
+    <div class="page-header">
+      <div class="section-label label">AI-Powered</div>
+      <h1 class="page-title">Document Analyzer</h1>
+      <p class="page-sub">Paste any legal document and get instant analysis with risk assessment, red flags, and plain English summary.</p>
+    </div>
+
+    <div class="analyzer-grid">
+
+      <!-- LEFT PANEL: INPUT -->
+      <div class="input-panel card">
+        <div class="panel-header">
+          <h3 class="panel-title">Your Document</h3>
+          <button class="btn-ghost" (click)="clearAll()" *ngIf="documentText">Clear</button>
+        </div>
+
+        <!-- Analysis Type Tabs -->
+        <div class="type-tabs">
+          <button *ngFor="let type of analysisTypes"
+                  class="type-tab"
+                  [class.active]="analysisType === type.id"
+                  (click)="analysisType = type.id">
+            <span class="tab-icon">{{ type.icon }}</span>
+            <span class="tab-label">{{ type.label }}</span>
+          </button>
+        </div>
+
+        <!-- Textarea -->
+        <div class="textarea-wrap" [class.has-content]="documentText">
+          <textarea
+            [(ngModel)]="documentText"
+            class="doc-textarea"
+            placeholder="Paste or type your legal document here...
+
+For example: rental agreement, employment contract, NDA, legal notice, or any other legal document you'd like analyzed."
+            rows="16"></textarea>
+          <div class="empty-overlay" *ngIf="!documentText">
+            <div class="empty-icon">📄</div>
+            <div class="empty-text">Paste or type your document here</div>
+            <div class="empty-hint">Supports contracts, agreements, notices, and more</div>
+          </div>
+        </div>
+
+        <!-- Analyze Button -->
+        <button class="btn-primary analyze-btn" (click)="analyze()" [disabled]="!documentText.trim() || isLoading">
+          <span *ngIf="!isLoading">Analyze Document →</span>
+          <span *ngIf="isLoading">Analyzing...</span>
+        </button>
+
+        <div class="disclaimer label">⚠️ Legal information only — not a substitute for professional legal advice</div>
+      </div>
+
+      <!-- RIGHT PANEL: RESULT -->
+      <div class="result-panel">
+
+        <!-- Empty State -->
+        <div class="empty-result card" *ngIf="!analysis && !isLoading">
+          <div class="empty-result-icon">🔍</div>
+          <h3 class="empty-result-title">Analysis Results</h3>
+          <p class="empty-result-desc">Paste a document and click "Analyze" to see AI-powered insights, risk assessment, and recommendations.</p>
+          <div class="empty-features">
+            <div class="empty-feature">
+              <span class="ef-icon">📋</span>
+              <span>Plain English Summary</span>
+            </div>
+            <div class="empty-feature">
+              <span class="ef-icon">🚩</span>
+              <span>Red Flags & Risks</span>
+            </div>
+            <div class="empty-feature">
+              <span class="ef-icon">✅</span>
+              <span>Risk Assessment</span>
+            </div>
+            <div class="empty-feature">
+              <span class="ef-icon">📌</span>
+              <span>Key Obligations</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-result card" *ngIf="isLoading">
+          <div class="shimmer-block shimmer-badge"></div>
+          <div class="shimmer-block shimmer-title"></div>
+          <div class="shimmer-block shimmer-line"></div>
+          <div class="shimmer-block shimmer-line short"></div>
+          <div class="shimmer-block shimmer-line"></div>
+          <div class="shimmer-block shimmer-line medium"></div>
+          <div class="shimmer-block shimmer-line"></div>
+          <div class="shimmer-block shimmer-line short"></div>
+          <div class="shimmer-block shimmer-line"></div>
+          <div class="shimmer-block shimmer-line medium"></div>
+          <div class="analyzing-text">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            Analyzing your document
+          </div>
+        </div>
+
+        <!-- Analysis Result -->
+        <div class="analysis-result card" *ngIf="analysis && !isLoading">
+          <div class="result-header">
+            <h3 class="result-title">Analysis Complete</h3>
+            <span class="badge" [ngClass]="getRiskBadgeClass()">{{ getRiskLabel() }}</span>
+          </div>
+          <div class="result-body" [innerHTML]="formatAnalysis(analysis)"></div>
+          <div class="result-footer">
+            <div class="disclaimer label">This analysis is AI-generated legal information, not legal advice.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
